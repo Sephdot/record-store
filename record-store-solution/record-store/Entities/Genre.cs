@@ -15,6 +15,9 @@
         ELECTRONIC,
         RAP,
         RHYTHM_AND_BLUES,
-        REGGAE
+        REGGAE,
+        GRUNGE,
+        PROGRESSIVE_ROCK,
+        SINGER_SONGWRITER
     }
 }

@@ -2,10 +2,10 @@
 {
     public record AlbumDTO
     {
-        string Title = "";
-        string Artist = "";
-        string Label = "";
-        DateOnly ReleaseDate;
-        IEnumerable<Genre> Genres = [];
+        public string Title = "";
+        public string Artist = "";
+        public string Label = "";
+        public DateOnly ReleaseDate;
+        public IEnumerable<Genre> Genres = [];
     }
 }
