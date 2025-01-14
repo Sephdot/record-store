@@ -1,5 +1,5 @@
 ﻿using record_store.Entities;
-using record_store.Models;
+using record_store.Repositories;
 
 namespace record_store.Services
 {

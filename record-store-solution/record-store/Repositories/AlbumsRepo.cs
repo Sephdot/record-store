@@ -1,6 +1,6 @@
 ﻿using record_store.Entities;
 
-namespace record_store.Models
+namespace record_store.Repositories
 {
     public interface IAlbumsRepo
     {
