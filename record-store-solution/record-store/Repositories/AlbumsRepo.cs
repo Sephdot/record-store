@@ -31,7 +31,7 @@ namespace record_store.Repositories
 
         public IEnumerable<Album> GrabAllAlbums()
         {
-            throw new NotImplementedException();
+            return _context.Albums.ToList();
         }
 
         public Album UpdateAlbumById(int id)
