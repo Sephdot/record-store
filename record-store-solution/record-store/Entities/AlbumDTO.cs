@@ -6,6 +6,6 @@
         public string Artist = "";
         public string Label = "";
         public DateOnly ReleaseDate;
-        public IEnumerable<Genre> Genres = [];
+        public List<Genre> Genres = [];
     }
 }
