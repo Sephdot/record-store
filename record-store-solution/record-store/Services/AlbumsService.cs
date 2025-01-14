@@ -36,7 +36,7 @@ namespace record_store.Services
 
         public IEnumerable<Album> GrabAllAlbums()
         {
-            throw new NotImplementedException();
+            return _albumsRepo.GrabAllAlbums();
         }
 
         public Album UpdateAlbumById(int id)
