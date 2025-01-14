@@ -13,6 +13,7 @@ namespace record_store
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // change this when in production
             modelBuilder.Entity<Album>().HasData(
         new Album { Id = 1, Title = "Thriller", Artist = "Michael Jackson", Label = "Epic", ReleaseDate = new DateOnly(1982, 11, 30), Genres = new[] { Genre.POP, Genre.RHYTHM_AND_BLUES } },
         new Album { Id = 2, Title = "Back in Black", Artist = "AC/DC", Label = "Atlantic", ReleaseDate = new DateOnly(1980, 7, 25), Genres = new[] { Genre.ROCK } },

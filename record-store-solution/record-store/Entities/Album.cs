@@ -2,11 +2,11 @@
 {
     public record Album
     {
-        int Id;
-        string Title = "";
-        string Artist = "";
-        string Label = "";
-        DateOnly ReleaseDate;
-        IEnumerable<Genre> Genres = [];
+        public int Id;
+        public string Title = "";
+        public string Artist = "";
+        public string Label = "";
+        public DateOnly ReleaseDate;
+        public IEnumerable<Genre> Genres = [];
     }
 }

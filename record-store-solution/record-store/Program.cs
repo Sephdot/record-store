@@ -1,4 +1,3 @@
-
 namespace record_store
 {
     public class Program
@@ -8,7 +7,7 @@ namespace record_store
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            builder.Services.AddDbContext<RecordStoreDbContext>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
