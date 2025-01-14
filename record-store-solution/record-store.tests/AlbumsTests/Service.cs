@@ -47,7 +47,6 @@ namespace record_store.tests.AlbumsTests
             var result = _albumsService.GrabAllAlbums();
 
             // assert
-
             Assert.That(result, Is.EquivalentTo(expected));
         }
 
@@ -62,7 +61,6 @@ namespace record_store.tests.AlbumsTests
             var result = _albumsService.GrabAllAlbums();
 
             // assert
-
             Assert.That(result, Is.EquivalentTo(expected));
         }
     }
