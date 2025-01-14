@@ -4,8 +4,8 @@ namespace record_store.Models
 {
     public interface IAlbumsRepo
     {
-        IEnumerable<Album> GetAllAlbums();
-        Album GetAlbumById(int id);
+        IEnumerable<Album> GrabAllAlbums();
+        Album GrabAlbumById(int id);
         IEnumerable<Album> AddAlbums(IEnumerable<AlbumDTO> albumsToAdd);
         Album UpdateAlbumById(int id);
         void DeleteAlbumById(int id);
@@ -24,12 +24,12 @@ namespace record_store.Models
             throw new NotImplementedException();
         }
 
-        public Album GetAlbumById(int id)
+        public Album GrabAlbumById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Album> GetAllAlbums()
+        public IEnumerable<Album> GrabAllAlbums()
         {
             throw new NotImplementedException();
         }
