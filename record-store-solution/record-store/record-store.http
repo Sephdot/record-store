@@ -1,0 +1,6 @@
+@record_store_HostAddress = http://localhost:5147
+
+GET {{record_store_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
