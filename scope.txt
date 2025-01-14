@@ -1,0 +1,15 @@
+Criteria
+- create API endpoints with appropriate HTTP verbs
+- API base URL and endpoints must be appropriately named
+- ensure API is production-quality: SoC, clean, readable
+- API must be well-tested
+- descriptive README to document key features, assumptions, approaches and future thoughts
+- must include error and exception handling in API design
+- all projects must include /health endpoint to show whether API is responding/database is contactable
+
+Must-Have Features
+- list all albums in stock (GET /albums)
+- get album by id (GET /albums/{id})
+- add new albums to database (POST /albums)
+- update album details (PUT /albums/{id}
+- delete albums from database (DELETE /albums)
