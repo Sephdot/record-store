@@ -14,25 +14,26 @@ namespace record_store.Controllers
             _albumsService = albumsService;
         }
 
+        [HttpGet]
         public IActionResult GetAllAlbums()
         {
-            return StatusCode(501);
+            return Ok(_albumsService.GrabAllAlbums());
         }
-        public IActionResult GetAlbumById(int id)
-        {
-            return StatusCode(501);
-        }
-        public IActionResult AddAlbums(IEnumerable<AlbumDTO> albumsToAdd)
-        {
-            return StatusCode(501);
-        }
-        public IActionResult UpdateAlbumById(int id)
-        {
-            return StatusCode(501);
-        }
-        public IActionResult DeleteAlbumById(int id)
-        {
-            return StatusCode(501);
-        }
+        //public IActionResult GetAlbumById(int id)
+        //{
+        //    return StatusCode(501);
+        //}
+        //public IActionResult AddAlbums(IEnumerable<AlbumDTO> albumsToAdd)
+        //{
+        //    return StatusCode(501);
+        //}
+        //public IActionResult UpdateAlbumById(int id)
+        //{
+        //    return StatusCode(501);
+        //}
+        //public IActionResult DeleteAlbumById(int id)
+        //{
+        //    return StatusCode(501);
+        //}
     }
 }

@@ -1,4 +1,5 @@
 ﻿using record_store.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace record_store.Repositories
 {
@@ -13,7 +14,11 @@ namespace record_store.Repositories
     }
     public class AlbumsRepo : IAlbumsRepo
     {
-        private RecordStoreDbContext _context = new();
+        private RecordStoreDbContext _context;
+        public AlbumsRepo(RecordStoreDbContext context)
+        {
+            _context = context;
+        }
         public IEnumerable<Album> AddAlbums(IEnumerable<AlbumDTO> albumsToAdd)
         {
             throw new NotImplementedException();

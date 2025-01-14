@@ -1,12 +1,12 @@
 ﻿namespace record_store.Entities
 {
-    public record Album
+    public class Album
     {
-        public int Id;
-        public string Title = "";
-        public string Artist = "";
-        public string Label = "";
-        public DateOnly ReleaseDate;
-        public IEnumerable<Genre> Genres = [];
+        public int Id { get; set; }
+        public string Title { get; set; } = "";
+        public string Artist { get; set; } = "";
+        public string Label { get; set; } = "";
+        public DateOnly ReleaseDate { get; set; }
+        public List<Genre> Genres { get; set; } = [];
     }
 }
