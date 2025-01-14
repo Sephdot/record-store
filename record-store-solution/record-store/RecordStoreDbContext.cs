@@ -8,13 +8,13 @@ namespace record_store
         public DbSet<Album> Albums { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // change this when in production
-            optionsBuilder.UseInMemoryDatabase("InMemoryDb");
+            base.OnConfiguring(optionsBuilder);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // change this when in production
-            modelBuilder.Entity<Album>().HasData(
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") is "Development")
+            {
+                modelBuilder.Entity<Album>().HasData(
         new Album { Id = 1, Title = "Thriller", Artist = "Michael Jackson", Label = "Epic", ReleaseDate = new DateOnly(1982, 11, 30), Genres = new[] { Genre.POP, Genre.RHYTHM_AND_BLUES } },
         new Album { Id = 2, Title = "Back in Black", Artist = "AC/DC", Label = "Atlantic", ReleaseDate = new DateOnly(1980, 7, 25), Genres = new[] { Genre.ROCK } },
         new Album { Id = 3, Title = "The Dark Side of the Moon", Artist = "Pink Floyd", Label = "Harvest", ReleaseDate = new DateOnly(1973, 3, 1), Genres = new[] { Genre.ROCK, Genre.PROGRESSIVE_ROCK } },
@@ -36,6 +36,7 @@ namespace record_store
         new Album { Id = 19, Title = "Random Access Memories", Artist = "Daft Punk", Label = "Columbia", ReleaseDate = new DateOnly(2013, 5, 17), Genres = new[] { Genre.ELECTRONIC, Genre.FUNK } },
         new Album { Id = 20, Title = "Blue", Artist = "Joni Mitchell", Label = "Reprise", ReleaseDate = new DateOnly(1971, 6, 22), Genres = new[] { Genre.FOLK, Genre.SINGER_SONGWRITER } }
     );
+            }
         }
     }
 }

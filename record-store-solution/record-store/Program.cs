@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace record_store
 {
     public class Program
@@ -12,6 +14,19 @@ namespace record_store
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Services.AddDbContext<RecordStoreDbContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
+            }
+            else if (builder.Environment.IsProduction())
+            {
+                builder.Services.AddDbContext<RecordStoreDbContext>(options => options.UseSqlServer("ProductionConnection"));
+            }
+            else
+            {
+                throw new Exception("Invalid environment, must be either development or production");
+            }
 
             var app = builder.Build();
 
