@@ -8,9 +8,9 @@ namespace record_store.tests.AlbumsTests
     public class Service
     {
 
-        Mock<IAlbumsRepo> _albumsRepoMock;
-        AlbumsService _albumsService;
-        List<Album> _albums;
+        private Mock<IAlbumsRepo> _albumsRepoMock;
+        private AlbumsService _albumsService;
+        private List<Album> _albums;
         [SetUp]
         public void Setup()
         {
