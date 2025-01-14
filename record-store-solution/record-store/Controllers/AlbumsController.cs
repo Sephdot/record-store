@@ -19,18 +19,34 @@ namespace record_store.Controllers
         {
             return Ok(_albumsService.GrabAllAlbums());
         }
-        //public IActionResult GetAlbumById(int id)
-        //{
-        //    return StatusCode(501);
-        //}
+
+        [HttpGet("{id}")]
+        public IActionResult GetAlbumById(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest($"Id: {id} is invalid.");
+            }
+            try
+            {
+                return Ok(_albumsService.GrabAlbumById(id));
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
         //public IActionResult AddAlbums(IEnumerable<AlbumDTO> albumsToAdd)
         //{
         //    return StatusCode(501);
         //}
+
         //public IActionResult UpdateAlbumById(int id)
         //{
         //    return StatusCode(501);
         //}
+
         //public IActionResult DeleteAlbumById(int id)
         //{
         //    return StatusCode(501);

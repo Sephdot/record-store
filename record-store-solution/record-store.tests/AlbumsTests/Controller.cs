@@ -37,7 +37,7 @@ namespace record_store.tests.AlbumsTests
         }
 
         [Test]
-        public void GetAllAlbums_ReturnsEmptyList_AndCorrectCode_WhenNoAlbumsPresent()
+        public void GetAllAlbums_ReturnsEmptyList_AndOk_WhenNoAlbumsPresent()
         {
             // arrange
             var expectedCode = 200;
@@ -56,7 +56,7 @@ namespace record_store.tests.AlbumsTests
         }
 
         [Test]
-        public void GetAllAlbums_ReturnsCorrectList_AndCorrectCode_WhenAlbumsArePresent()
+        public void GetAllAlbums_ReturnsCorrectList_AndOk_WhenAlbumsArePresent()
         {
             // arrange
             var expectedCode = 200;
@@ -71,6 +71,73 @@ namespace record_store.tests.AlbumsTests
             {
                 Assert.That(result.StatusCode, Is.EqualTo(expectedCode));
                 Assert.That(result.Value, Is.EquivalentTo(expectedValue));
+            });
+        }
+
+        [Test]
+        public void GetAlbumById_InvokesCorrectMethodOnce()
+        {
+            _albumsController.GetAlbumById(1);
+
+            _albumsServiceMock.Verify(r => r.GrabAlbumById(1), Times.Once);
+        }
+
+        [Test]
+        public void GetAlbumById_ReturnsCorrectAlbum_AndOk_WhenAlbumFound()
+        {
+            // arrange
+            var expectedCode = 200;
+            var expectedValue = _albums[0];
+            _albumsServiceMock.Setup(s => s.GrabAlbumById(1)).Returns(_albums[0]);
+
+            // act
+            var result = _albumsController.GetAlbumById(1) as ObjectResult;
+
+            // assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.StatusCode, Is.EqualTo(expectedCode));
+                Assert.That(result.Value, Is.EqualTo(expectedValue));
+            });
+        }
+
+        [Test]
+        public void GetAlbumById_ReturnsCorrectMessage_AndNotFound_WhenAlbumNotFound()
+        {
+            // arrange
+            var id = 1;
+            var expectedCode = 404;
+            var expectedMsg = $"No album with id: {id} found.";
+            _albumsServiceMock.Setup(s => s.GrabAlbumById(id)).Throws(new Exception(expectedMsg));
+
+            // act
+            var result = _albumsController.GetAlbumById(id) as ObjectResult;
+
+            // assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.StatusCode, Is.EqualTo(expectedCode));
+                Assert.That(result.Value, Is.EqualTo(expectedMsg));
+            });
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-2)]
+        public void GetAlbumById_ReturnsCorrectMessage_AndBadRequest_WhenInvalidIdPassed(int id)
+        {
+            // arrange
+            var expectedCode = 400;
+            var expectedMsg = $"Id: {id} is invalid.";
+
+            // act
+            var result = _albumsController.GetAlbumById(id) as ObjectResult;
+
+            // assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.StatusCode, Is.EqualTo(expectedCode));
+                Assert.That(result.Value, Is.EqualTo(expectedMsg));
             });
         }
     }

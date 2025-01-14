@@ -31,7 +31,7 @@ namespace record_store.Repositories
 
         public Album GrabAlbumById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Albums.FirstOrDefault(a => a.Id.Equals(id)) ?? throw new Exception($"No album with id {id} found.");
         }
 
         public IEnumerable<Album> GrabAllAlbums()

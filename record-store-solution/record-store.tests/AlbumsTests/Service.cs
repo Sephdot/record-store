@@ -63,5 +63,27 @@ namespace record_store.tests.AlbumsTests
             // assert
             Assert.That(result, Is.EquivalentTo(expected));
         }
+
+        [Test]
+        public void GrabAlbumById_InvokesCorrectMethodOnce()
+        {
+            _albumsService.GrabAlbumById(1);
+
+            _albumsRepoMock.Verify(r => r.GrabAlbumById(1), Times.Once);
+        }
+
+        [Test]
+        public void GrabAlbumById_ReturnsExpected_WhenRepoReturnsAlbum()
+        {
+            // arrange
+            var expected = _albums[0];
+            _albumsRepoMock.Setup(r => r.GrabAlbumById(1)).Returns(_albums[0]);
+
+            // act
+            var result = _albumsService.GrabAlbumById(1);
+
+            // assert
+            Assert.That(result, Is.EqualTo(expected));
+        }
     }
 }
