@@ -6,7 +6,7 @@ namespace record_store.Models
     {
         IEnumerable<Album> GetAllAlbums();
         Album GetAlbumById(int id);
-        IEnumerable<Album> AddAlbums(IEnumerable<Album> albumsToAdd);
+        IEnumerable<Album> AddAlbums(IEnumerable<AlbumDTO> albumsToAdd);
         Album UpdateAlbumById(int id);
         void DeleteAlbumById(int id);
         
@@ -14,7 +14,7 @@ namespace record_store.Models
     public class AlbumsRepo : IAlbumsRepo
     {
         private RecordStoreDbContext _context = new();
-        public IEnumerable<Album> AddAlbums(IEnumerable<Album> albumsToAdd)
+        public IEnumerable<Album> AddAlbums(IEnumerable<AlbumDTO> albumsToAdd)
         {
             throw new NotImplementedException();
         }
