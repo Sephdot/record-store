@@ -8,7 +8,7 @@ namespace record_store.Services
         IEnumerable<Album> GrabAllAlbums();
         Album GrabAlbumById(int id);
         IEnumerable<Album> AddAlbums(IEnumerable<Album> albumsToAdd);
-        Album UpdateAlbumById(int id);
+        Album UpdateAlbumById(int id, Album updatedAlbum);
         void DeleteAlbumById(int id);
     }
     public class AlbumsService : IAlbumsService
@@ -39,9 +39,9 @@ namespace record_store.Services
             return _albumsRepo.GrabAllAlbums();
         }
 
-        public Album UpdateAlbumById(int id)
+        public Album UpdateAlbumById(int id, Album updatedAlbum)
         {
-            throw new NotImplementedException();
+            return _albumsRepo.UpdateAlbumById(id, updatedAlbum);
         }
     }
 }

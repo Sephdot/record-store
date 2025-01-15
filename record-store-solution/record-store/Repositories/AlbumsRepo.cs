@@ -8,7 +8,7 @@ namespace record_store.Repositories
         IEnumerable<Album> GrabAllAlbums();
         Album GrabAlbumById(int id);
         IEnumerable<Album> AddAlbums(IEnumerable<Album> albumsToAdd);
-        Album UpdateAlbumById(int id);
+        Album UpdateAlbumById(int id, Album updatedAlbum);
         void DeleteAlbumById(int id);
         
     }
@@ -45,9 +45,13 @@ namespace record_store.Repositories
             return _context.Albums.ToList();
         }
 
-        public Album UpdateAlbumById(int id)
+        public Album UpdateAlbumById(int id, Album updatedAlbum)
         {
-            throw new NotImplementedException();
+            Album albumToChange = _context.Albums.FirstOrDefault(a => a.Id.Equals(id)) ?? throw new Exception($"No album with id {id} found.");
+            updatedAlbum.Id = id;
+            albumToChange = updatedAlbum;
+            _context.SaveChanges();
+            return albumToChange;
         }
     }
 }

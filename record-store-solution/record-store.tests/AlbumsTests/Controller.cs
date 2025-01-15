@@ -185,5 +185,78 @@ namespace record_store.tests.AlbumsTests
                 Assert.That(result.Value, Is.EquivalentTo(expectedMsg));
             });
         }
+
+        [Test]
+        public void PutAlbum_InvokesCorrectMethodOnce()
+        {
+            _albumsController.PutAlbum(1, _albums[0]);
+
+            _albumsServiceMock.Verify(r => r.UpdateAlbumById(1, _albums[0]), Times.Once);
+        }
+
+        [Test]
+        public void PutAlbum_ReturnsUpdatedAlbum_AndOk_WhenPassedAlbum()
+        {
+            // arrange
+            var expectedCode = 200;
+            var updatedAlbum = _albums[0];
+            updatedAlbum.Artist = "Coldplay";
+            var expectedValue = updatedAlbum;
+            _albumsServiceMock.Setup(r => r.UpdateAlbumById(1, _albums[0])).Returns(updatedAlbum);
+
+            // act
+            var result = _albumsController.PutAlbum(1, _albums[0]) as ObjectResult;
+
+            // assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.StatusCode, Is.EqualTo(expectedCode));
+                Assert.That(result.Value, Is.EqualTo(expectedValue));
+            });
+        }
+
+        [Test]
+        public void PutAlbum_ReturnsCorrectMessage_AndNotFound_WhenNoAlbumWithIdFound()
+        {
+            // arrange
+            var expectedCode = 404;
+            var idTooBig = _albums.Count + 1;
+            var updatedAlbum = _albums[0];
+            updatedAlbum.Artist = "Coldplay";
+            var expectedMsg = $"No album with id: {idTooBig} found.";
+            _albumsServiceMock.Setup(s => s.UpdateAlbumById(idTooBig, updatedAlbum)).Throws(new Exception(expectedMsg));
+
+            // act
+            var result = _albumsController.PutAlbum(idTooBig, _albums[0]) as ObjectResult;
+
+            // assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.StatusCode, Is.EqualTo(expectedCode));
+                Assert.That(result.Value, Is.EqualTo(expectedMsg));
+            });
+        }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void PutAlbum_ReturnsCorrectMessage_AndBadRequest_WhenIdIsZeroOrLess(int id)
+        {
+            // arrange
+            var expectedCode = 400;
+            var updatedAlbum = _albums[0];
+            updatedAlbum.Artist = "Coldplay";
+            var expectedMsg = $"Id: {id} is invalid.";
+
+            // act
+            var result = _albumsController.PutAlbum(id, _albums[0]) as ObjectResult;
+
+            // assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.StatusCode, Is.EqualTo(expectedCode));
+                Assert.That(result.Value, Is.EqualTo(expectedMsg));
+            });
+        }
     }
 }

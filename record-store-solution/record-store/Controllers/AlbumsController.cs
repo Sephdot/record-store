@@ -54,10 +54,22 @@ namespace record_store.Controllers
             }
         }
 
-        //public IActionResult UpdateAlbumById(int id)
-        //{
-        //    return StatusCode(501);
-        //}
+        [HttpPut("{id}")]
+        public IActionResult PutAlbum([FromRoute] int id, [FromBody] Album updatedAlbum)
+        {
+            if (id <= 0)
+            {
+                return BadRequest($"Id: {id} is invalid.");
+            }
+            try
+            {
+                return Ok(_albumsService.UpdateAlbumById(id, updatedAlbum));
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
 
         //public IActionResult DeleteAlbumById(int id)
         //{

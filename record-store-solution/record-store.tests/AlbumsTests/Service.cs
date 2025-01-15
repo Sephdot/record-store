@@ -122,5 +122,31 @@ namespace record_store.tests.AlbumsTests
             // assert
             Assert.That(result, Is.EquivalentTo(expected));
         }
+
+        [Test]
+        public void UpdateAlbumById_InvokesCorrectMethodOnce()
+        {
+            var id = 4;
+            _albumsService.UpdateAlbumById(id, _albums[1]);
+
+            _albumsRepoMock.Verify(r => r.UpdateAlbumById(id, _albums[1]), Times.Once);
+        }
+
+        [Test]
+        public void UpdateAlbumById_ReturnsUpdatedAlbum_WhenRepoReturnsUpdatedAlbum()
+        {
+            // arrange
+            var id = 4;
+            var expected = _albums[0];
+            expected.Artist = "Coldplay";
+
+            _albumsRepoMock.Setup(r => r.UpdateAlbumById(id, expected)).Returns(expected);
+
+            // act
+            var result = _albumsService.UpdateAlbumById(id, expected);
+
+            // assert
+            Assert.That(result, Is.EqualTo(expected));
+        }
     }
 }
