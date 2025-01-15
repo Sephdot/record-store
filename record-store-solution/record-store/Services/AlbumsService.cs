@@ -26,7 +26,7 @@ namespace record_store.Services
 
         public void DeleteAlbumById(int id)
         {
-            throw new NotImplementedException();
+            _albumsRepo.DeleteAlbumById(id);
         }
 
         public Album GrabAlbumById(int id)

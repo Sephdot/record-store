@@ -148,5 +148,22 @@ namespace record_store.tests.AlbumsTests
             // assert
             Assert.That(result, Is.EqualTo(expected));
         }
+        [Test]
+        public void DeleteAlbumById_InvokesCorrectMethodOnce()
+        {
+            var id = 4;
+            _albumsService.DeleteAlbumById(id);
+
+            _albumsRepoMock.Verify(r => r.DeleteAlbumById(id), Times.Once);
+        }
+        [Test]
+        public void DeleteAlbumById_DoesNotThrow_WhenRepoDoesNotThrow()
+        {
+            // arrange
+            var id = 4;
+
+            // act & assert
+            Assert.DoesNotThrow(() => _albumsService.DeleteAlbumById(id));
+        }
     }
 }
