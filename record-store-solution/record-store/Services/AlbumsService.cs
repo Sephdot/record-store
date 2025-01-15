@@ -7,7 +7,7 @@ namespace record_store.Services
     {
         IEnumerable<Album> GrabAllAlbums();
         Album GrabAlbumById(int id);
-        IEnumerable<Album> AddAlbums(IEnumerable<AlbumDTO> albumsToAdd);
+        IEnumerable<Album> AddAlbums(IEnumerable<Album> albumsToAdd);
         Album UpdateAlbumById(int id);
         void DeleteAlbumById(int id);
     }
@@ -19,9 +19,9 @@ namespace record_store.Services
             _albumsRepo = albumsRepo;
         }
 
-        public IEnumerable<Album> AddAlbums(IEnumerable<AlbumDTO> albumsToAdd)
+        public IEnumerable<Album> AddAlbums(IEnumerable<Album> albumsToAdd)
         {
-            throw new NotImplementedException();
+            return _albumsRepo.AddAlbums(albumsToAdd);
         }
 
         public void DeleteAlbumById(int id)

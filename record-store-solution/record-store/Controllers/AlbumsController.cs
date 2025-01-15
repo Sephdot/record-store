@@ -37,10 +37,22 @@ namespace record_store.Controllers
             }
         }
 
-        //public IActionResult AddAlbums(IEnumerable<AlbumDTO> albumsToAdd)
-        //{
-        //    return StatusCode(501);
-        //}
+        [HttpPost]
+        public IActionResult PostAlbums(IEnumerable<Album> albumsToAdd)
+        {
+            if (albumsToAdd.ToList().Count == 0)
+            {
+                return BadRequest("Post request to this endpoint must contain at least one Album.");
+            }
+            try
+            {
+                return Ok(_albumsService.AddAlbums(albumsToAdd));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
 
         //public IActionResult UpdateAlbumById(int id)
         //{

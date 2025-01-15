@@ -7,7 +7,7 @@ namespace record_store.Repositories
     {
         IEnumerable<Album> GrabAllAlbums();
         Album GrabAlbumById(int id);
-        IEnumerable<Album> AddAlbums(IEnumerable<AlbumDTO> albumsToAdd);
+        IEnumerable<Album> AddAlbums(IEnumerable<Album> albumsToAdd);
         Album UpdateAlbumById(int id);
         void DeleteAlbumById(int id);
         
@@ -19,9 +19,14 @@ namespace record_store.Repositories
         {
             _context = context;
         }
-        public IEnumerable<Album> AddAlbums(IEnumerable<AlbumDTO> albumsToAdd)
+        public IEnumerable<Album> AddAlbums(IEnumerable<Album> albumsToAdd)
         {
-            throw new NotImplementedException();
+            _context.AddRange(albumsToAdd);
+            _context.SaveChanges();
+            var x = _context.Albums
+                .ToList()
+                .TakeLast(albumsToAdd.ToList().Count);
+            return x;
         }
 
         public void DeleteAlbumById(int id)
