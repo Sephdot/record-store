@@ -23,6 +23,7 @@ namespace record_store.Repositories
         {
             _context.AddRange(albumsToAdd);
             _context.SaveChanges();
+
             var x = _context.Albums
                 .ToList()
                 .TakeLast(albumsToAdd.ToList().Count);
