@@ -32,12 +32,17 @@ namespace record_store.Repositories
 
         public void DeleteAlbumById(int id)
         {
-            throw new NotImplementedException();
+            Album albumToDelete = _context.Albums.FirstOrDefault(a => a.Id.Equals(id)) 
+                ?? throw new Exception($"No album with id {id} found.");
+
+            _context.Remove(albumToDelete);
+            _context.SaveChanges();
         }
 
         public Album GrabAlbumById(int id)
         {
-            return _context.Albums.FirstOrDefault(a => a.Id.Equals(id)) ?? throw new Exception($"No album with id {id} found.");
+            return _context.Albums.FirstOrDefault(a => a.Id.Equals(id)) 
+                ?? throw new Exception($"No album with id {id} found.");
         }
 
         public IEnumerable<Album> GrabAllAlbums()
@@ -47,7 +52,8 @@ namespace record_store.Repositories
 
         public Album UpdateAlbumById(int id, Album updatedAlbum)
         {
-            Album albumToChange = _context.Albums.FirstOrDefault(a => a.Id.Equals(id)) ?? throw new Exception($"No album with id {id} found.");
+            Album albumToChange = _context.Albums.FirstOrDefault(a => a.Id.Equals(id)) 
+                ?? throw new Exception($"No album with id {id} found.");
             updatedAlbum.Id = id;
             albumToChange = updatedAlbum;
             _context.SaveChanges();
