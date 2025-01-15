@@ -140,5 +140,50 @@ namespace record_store.tests.AlbumsTests
                 Assert.That(result.Value, Is.EqualTo(expectedMsg));
             });
         }
+
+        [Test]
+        public void PostAlbums_InvokesCorrectMethodOnce()
+        {
+            _albumsController.PostAlbums(_albums);
+
+            _albumsServiceMock.Verify(r => r.AddAlbums(_albums), Times.Once);
+        }
+
+        [Test]
+        public void PostAlbums_ReturnsCorrectListOfAlbums_AndOk_WhenPassedAlbumsAreValid()
+        {
+            // arrange
+            var expectedCode = 200;
+            var expectedValue = _albums;
+            _albumsServiceMock.Setup(s => s.AddAlbums(_albums)).Returns(_albums);
+
+            // act
+            var result = _albumsController.PostAlbums(_albums) as ObjectResult;
+
+            // assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.StatusCode, Is.EqualTo(expectedCode));
+                Assert.That(result.Value, Is.EquivalentTo(expectedValue));
+            });
+        }
+
+        [Test]
+        public void PostAlbums_ReturnsCorrectMessage_AndBadRequest_WhenPassedEmptyListOfDTOs()
+        {
+            // arrange
+            var expectedCode = 400;
+            var expectedMsg = "Post request to this endpoint must contain at least one Album.";
+
+            // act
+            var result = _albumsController.PostAlbums(new List<Album>()) as ObjectResult;
+
+            // assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.StatusCode, Is.EqualTo(expectedCode));
+                Assert.That(result.Value, Is.EquivalentTo(expectedMsg));
+            });
+        }
     }
 }

@@ -8,8 +8,10 @@ namespace record_store
     {
         public static void Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
 
+            var connectionString = builder.Configuration.GetConnectionString("ProductionConnection");
             // Add services to the container.
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -18,29 +20,31 @@ namespace record_store
             builder.Services.AddScoped<IAlbumsRepo, AlbumsRepo>();
             builder.Services.AddScoped<IAlbumsService, AlbumsService>();
 
-            if (builder.Environment.IsDevelopment())
-            {
-                builder.Services.AddDbContext<RecordStoreDbContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
-            }
-            else if (builder.Environment.IsProduction())
-            {
-                builder.Services.AddDbContext<RecordStoreDbContext>(options => options.UseSqlServer("ProductionConnection"));
-            }
-            else
-            {
-                throw new Exception("Invalid environment, must be either development or production");
-            }
+            //if (builder.Environment.IsDevelopment())
+            //{
+            //    builder.Services.AddDbContext<RecordStoreDbContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
+            //}
+            //else if (builder.Environment.IsProduction())
+            //{
+            //    builder.Services.AddDbContext<RecordStoreDbContext>(options => options.UseSqlServer("ProductionConnection"));
+            //}
+            //else
+            //{
+            //    throw new Exception("Invalid environment, must be either development or production");
+            //}
 
+
+            builder.Services.AddDbContext<RecordStoreDbContext>(options => options.UseSqlServer(connectionString));
             
 
             var app = builder.Build();
 
             // Ensures the database is initialized
-            using (var scope = app.Services.CreateScope())
-            {
-                var dbContext = scope.ServiceProvider.GetRequiredService<RecordStoreDbContext>();
-                dbContext.Database.EnsureCreated();
-            }
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    var dbContext = scope.ServiceProvider.GetRequiredService<RecordStoreDbContext>();
+            //    dbContext.Database.EnsureCreated();
+            //}
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
