@@ -258,5 +258,68 @@ namespace record_store.tests.AlbumsTests
                 Assert.That(result.Value, Is.EqualTo(expectedMsg));
             });
         }
+        [Test]
+        public void DeleteAlbumById_InvokesCorrectMethodOnce()
+        {
+            var id = 4;
+            _albumsController.DeleteAlbumById(4);
+
+            _albumsServiceMock.Verify(r => r.DeleteAlbumById(4), Times.Once);
+        }
+        [Test]
+        public void DeleteAlbumById_ReturnsNoContent_AndCorrectMessage_WhenAlbumFound()
+        {
+            // arrange
+            var expectedCode = 204;
+            var id = 4;
+
+            // act
+            var result = _albumsController.DeleteAlbumById(id) as StatusCodeResult;
+
+            // assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.StatusCode, Is.EqualTo(expectedCode));
+            });
+        }
+        [Test]
+        public void DeleteAlbumById_ReturnsNotFound_AndCorrectMessage_WhenAlbumNotFound()
+        {
+            // arrange
+            var expectedCode = 404;
+            var id = 4;
+            var expectedMsg = $"No album with id {id} found.";
+            _albumsServiceMock.Setup(s => s.DeleteAlbumById(id)).Throws(new Exception(expectedMsg));
+
+            // act
+            var result = _albumsController.DeleteAlbumById(id) as ObjectResult;
+
+            // assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.StatusCode, Is.EqualTo(expectedCode));
+                Assert.That(result.Value, Is.EqualTo(expectedMsg));
+            });
+        }
+        [Test]
+        [TestCase(0)]
+        [TestCase(-4)]
+        public void DeleteAlbumById_ReturnsBadRequest_AndCorrectMessage_WhenIdIsInvalid(int id)
+        {
+            // arrange
+            var expectedCode = 400;
+            var expectedMsg = $"Id: {id} is invalid.";
+            _albumsServiceMock.Setup(s => s.DeleteAlbumById(id)).Throws(new Exception(expectedMsg));
+
+            // act
+            var result = _albumsController.DeleteAlbumById(id) as ObjectResult;
+
+            // assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.StatusCode, Is.EqualTo(expectedCode));
+                Assert.That(result.Value, Is.EqualTo(expectedMsg));
+            });
+        }
     }
 }

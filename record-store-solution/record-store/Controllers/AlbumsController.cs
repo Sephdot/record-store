@@ -71,9 +71,22 @@ namespace record_store.Controllers
             }
         }
 
-        //public IActionResult DeleteAlbumById(int id)
-        //{
-        //    return StatusCode(501);
-        //}
+        [HttpDelete]
+        public IActionResult DeleteAlbumById(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest($"Id: {id} is invalid.");
+            }
+            try
+            {
+                _albumsService.DeleteAlbumById(id);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+        }
     }
 }
